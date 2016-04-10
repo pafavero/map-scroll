@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de" >
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Prototype Scroll and Map</title>
+        <link type="text/css" rel="stylesheet" href="css/vendor/openlayers/ol.css" />
+        <style >
+            #map-container{
+                width: 900px;
+                height: 800px;
+                margin: 0px;
+                padding: 0px;
+                border: 1px solid #e3e6e7;
+                overflow-y: auto;
+            }
+
+            #map {
+                height: 400px;
+                width: 860px;
+
+                margin-top: 15px;
+                position: relative;
+            }
+
+            .exp-div {
+                margin-top: 15px;
+                height: 250px;
+                width: 860px;
+                background-color: #95b9e6;
+            } 
+
+        </style>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script> 
+        <script type="text/javascript" src="js/vendor/ol.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+              var isMapActive = false;
+              var mouseWheelZoom = null;
+
+              var map = new ol.Map({
+                interactions: ol.interaction.defaults({mouseWheelZoom: false}),
+                layers: [
+                  new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                  })
+                ],
+                target: 'map',
+                view: new ol.View({
+                  center: [0, 0],
+                  zoom: 2
+                })
+              });
+              var activateMap = function (active) {
+                isMapActive = active;
+                if (active) {
+                  if (!mouseWheelZoom) {
+                    mouseWheelZoom = new ol.interaction.MouseWheelZoom();
+                    map.addInteraction(mouseWheelZoom);
+                  } else {
+                    mouseWheelZoom.setActive(true);
+                  }
+                } else {
+                  if (mouseWheelZoom)
+                    mouseWheelZoom.setActive(false);
+                }
+              };
+
+              $(document).on('click', function (event) {
+                if ($(event.target).closest('#map').length) {//https://css-tricks.com/dangers-stopping-event-propagation/
+                  if (!isMapActive)
+                    activateMap(true);
+                } else {
+                  if (isMapActive)
+                    activateMap(false);
+                }
+              });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Solution 2</h1>
+        <p>Temporary stop of the zoom in and zoom out in the map</p>
+        <div id="map-container" >
+            <div class="exp-div"></div>
+            <div class="exp-div"></div>
+            <div class="exp-div"></div>
+            <div id="map"></div>
+            <div class="exp-div"></div>
+            <div class="exp-div"></div>
+            <div class="exp-div"></div>
+        </div>        
+    </body>
+</html>

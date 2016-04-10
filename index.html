@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de" >
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Prototype Scroll and Map</title>
+        <link type="text/css" rel="stylesheet" href="css/vendor/openlayers/ol.css" />
+        <style >
+            #map-container{
+                width: 900px;
+                height: 800px;
+                margin: 0px;
+                padding: 0px;
+                border: 1px solid #e3e6e7;
+                overflow-y: auto;
+            }
+
+            #map {
+                width: 860px;
+                height: 400px;
+                margin-top: 15px;
+                position: relative;
+            }
+
+            .exp-div {
+                margin-top: 15px;
+                height: 250px;
+                width: 860px;
+                background-color: #95b9e6;
+            } 
+        </style>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script> 
+        <script type="text/javascript" src="js/vendor/ol.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+              new ol.Map({
+                layers: [
+                  new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                  })
+                ],
+                target: 'map',
+                view: new ol.View({
+                  center: [0, 0],
+                  zoom: 2
+                })
+              });
+            });
+        </script> 
+    </head>
+    <body>
+        <h1>Map and scroll</h1>
+        <p>This example shows that the scroll (through the mouse wheel) stops when the cursor crosses the map. In fact, the map events of mouse wheel are associated with zoom in and zoom out</p>
+        <p>Try to scroll this page down to see the problem!</p>
+        <p>Yes, I know: the interuption of the scrolling is not so drammatic, many web sites have this problem. However, a simple solution is very easy to implement. Why to not use it?</p>
+        <div>The two examples <a href="solution1.html">solution1.html</a> and <a  href="solution2.html">solution2.html</a> show possible solutions</div>
+        <div id="map-container" >
+            <div class="exp-div"></div>
+            <div class="exp-div"></div>
+            <div class="exp-div"></div>
+            <div id="map"></div>
+            <div class="exp-div"></div>
+            <div class="exp-div"></div>
+            <div class="exp-div"></div>
+        </div>        
+    </body>
+</html>
